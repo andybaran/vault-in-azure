@@ -1,6 +1,8 @@
+/*
 data "http" "ip" {
   url = "https://ipv4.icanhazip.com"
 }
+*/
 
 resource "azurerm_bastion_host" "gatekeeper" {
   name                = var.azure_bastion_host_name
@@ -14,8 +16,10 @@ resource "azurerm_bastion_host" "gatekeeper" {
   }
 }
 
+/* 
+
 resource "azurerm_key_vault" "vault-vault" {
-    depends_on  = [ data.http.ip ]
+  depends_on  = [ data.http.ip ]
   name                        = var.azure_keyvault_name
   location                    = azurerm_resource_group.vault-rg.location
   resource_group_name         = azurerm_resource_group.vault-rg.name
@@ -125,9 +129,6 @@ resource "azurerm_key_vault" "vault-vault" {
                                   azurerm_subnet.AzureBastionSubnet.id,
                                   ]
   }
-
-
-
 }
 
 resource "tls_private_key" "ssh-key" {
@@ -150,3 +151,4 @@ resource "azurerm_key_vault_key" "unsealer" {
     "unwrapKey",
   ]
 }
+*/

@@ -58,14 +58,10 @@ resource "azurerm_linux_virtual_machine" "vault-vm" {
   size                = "Standard_D4a_v4" #https://docs.microsoft.com/en-us/azure/virtual-machines/sizes
   custom_data         = base64encode(data.template_file.vault-setup.rendered)
   admin_username      = var.admin_username
+  admin_password = var.admin_password
   network_interface_ids = [
     azurerm_network_interface.vault-nic.id,
   ]
-
-  admin_ssh_key {
-    username   = var.admin_username
-    public_key = tls_private_key.ssh-key.public_key_openssh
-  }
 
   os_disk {
     caching              = "ReadWrite"
@@ -87,6 +83,7 @@ resource "azurerm_linux_virtual_machine" "postgres_vm" {
   size                = "Standard_D4a_v4" #https://docs.microsoft.com/en-us/azure/virtual-machines/sizes
   custom_data         = base64encode(data.template_file.postgres-setup.rendered)
   admin_username      = var.admin_username
+  admin_password = var.admin_password
   network_interface_ids = [
     azurerm_network_interface.postgres-nic.id,
   ]
