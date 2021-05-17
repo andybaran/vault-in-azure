@@ -16,8 +16,6 @@ resource "azurerm_bastion_host" "gatekeeper" {
   }
 }
 
-/* 
-
 resource "azurerm_key_vault" "vault-vault" {
   depends_on  = [ data.http.ip ]
   name                        = var.azure_keyvault_name
@@ -151,4 +149,3 @@ resource "azurerm_key_vault_key" "unsealer" {
     "unwrapKey",
   ]
 }
-*/
