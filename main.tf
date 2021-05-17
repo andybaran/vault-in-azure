@@ -90,11 +90,6 @@ resource "azurerm_linux_virtual_machine" "postgres_vm" {
     azurerm_network_interface.postgres-nic.id,
   ]
 
-  admin_ssh_key {
-    username   = var.admin_username
-    public_key = tls_private_key.ssh-key.public_key_openssh
-  }
-
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
