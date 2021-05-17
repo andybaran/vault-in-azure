@@ -11,7 +11,6 @@ resource "azurerm_bastion_host" "gatekeeper" {
 }
 
 resource "azurerm_key_vault" "vault-vault" {
-  depends_on  = [ data.http.ip ]
   name                        = var.azure_keyvault_name
   location                    = azurerm_resource_group.vault-rg.location
   resource_group_name         = azurerm_resource_group.vault-rg.name
