@@ -8,6 +8,16 @@ terraform {
   }
 }
 
+/*
+# Random provider to guarantee some uniqueness
+provider "random" {}
+
+resource "random_string" "random-string" {
+  length = 3
+  special = false
+}
+*/
+
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
   features {}
@@ -39,8 +49,8 @@ data "template_file" "vault-setup" {
 
 data "template_file" "postgres-setup" {
   template = file("${path.module}/postgressetup.tpl")
-
 }
+
 resource "azurerm_linux_virtual_machine" "vault-vm" {
   name                = var.vault_vm_name
   resource_group_name = azurerm_resource_group.vault-rg.name
@@ -95,6 +105,28 @@ resource "azurerm_linux_virtual_machine" "postgres_vm" {
     publisher = "Canonical"
     offer     = "UbuntuServer"
     sku       = "18.04-LTS"
+    version   = "latest"
+  }
+}
+
+resource "azurerm_windows_virtual_machine" "windows-vm" {
+  name = var.windows_vm_name
+  resource_group_name = azurerm_resource_group.vault-rg.name
+  location            = azurerm_resource_group.vault-rg.location
+  size                = "Standard_D4a_v4" #https://docs.microsoft.com/en-us/azure/virtual-machines/sizes
+  admin_username = var.admin_username
+  admin_password = var.admin_password
+  network_interface_ids = [ azurerm_network_interface.windows-nic.id ]
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2019-Datacenter"
     version   = "latest"
   }
 }
