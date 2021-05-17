@@ -45,6 +45,6 @@ variable "azure_bastion_host_name" {
   type = string
 }
 
-varialbe "windows_vm_name" {
+variable "windows_vm_name" {
   type = string
 }
