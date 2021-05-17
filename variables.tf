@@ -48,3 +48,7 @@ variable "azure_bastion_host_name" {
 variable "windows_vm_name" {
   type = string
 }
+
+variable "admin_password" {
+  type = string
+}
