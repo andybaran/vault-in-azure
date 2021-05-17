@@ -57,6 +57,7 @@ resource "azurerm_linux_virtual_machine" "vault-vm" {
   location            = azurerm_resource_group.vault-rg.location
   size                = "Standard_D4a_v4" #https://docs.microsoft.com/en-us/azure/virtual-machines/sizes
   custom_data         = base64encode(data.template_file.vault-setup.rendered)
+  disable_password_authentication = false
   admin_username      = var.admin_username
   admin_password = var.admin_password
   network_interface_ids = [
@@ -82,6 +83,7 @@ resource "azurerm_linux_virtual_machine" "postgres_vm" {
   location            = azurerm_resource_group.vault-rg.location
   size                = "Standard_D4a_v4" #https://docs.microsoft.com/en-us/azure/virtual-machines/sizes
   custom_data         = base64encode(data.template_file.postgres-setup.rendered)
+  disable_password_authentication = false
   admin_username      = var.admin_username
   admin_password = var.admin_password
   network_interface_ids = [
