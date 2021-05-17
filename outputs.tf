@@ -1,10 +1,10 @@
 ############ Outputs
 
-output "private-key-pem" {
+/*output "private-key-pem" {
   value       = tls_private_key.ssh-key.private_key_pem
   description = "Private key in PEM format"
   sensitive = false
-}
+}*/
 
 output "openssh-public-key" {
   value       = tls_private_key.ssh-key.public_key_openssh
