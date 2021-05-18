@@ -16,6 +16,6 @@ curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
 apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 apt-get install postgresql jq -y
 
-echo "listen_address = '*'" >> /etc/postgresql/10/main/postgresql.conf
+echo "listen_addresses = '*'" >> /etc/postgresql/10/main/postgresql.conf
 echo "host    all   all 0.0.0.0/0   md5" >> /etc/postgresql/10/main/pg_hba.conf
 systemctl restart postgresql.service

@@ -44,3 +44,11 @@ variable "azure_keyvault_name" {
 variable "azure_bastion_host_name" {
   type = string
 }
+
+variable "windows_vm_name" {
+  type = string
+}
+
+variable "admin_password" {
+  type = string
+}
