@@ -8,16 +8,17 @@
 set -euxo pipefail
 
 ip_address="$(ip addr show eth0 | perl -n -e'/ inet (\d+(\.\d+)+)/ && print $1')"
-
-apt-get install postgresql-client -y
+apt update
+apt-get install -y postgresql-client jq unzip
 
 # install vault.
 # NB execute `apt-cache madison vault` to known the available versions.
-apt-get install -y "vault=${vault_version}" jq unzip
+apt-get install -y "vault=${vault_version}"
 wget https://releases.hashicorp.com/tfc-agent/0.1.14/tfc-agent_0.1.14_linux_amd64.zip -O /tmp/tfc-agent.zip
 unzip /tmp/tfc-agent.zip -d /usr/bin
 curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
 apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+apt-get install -y "vault=${vault_version}"
 cat >/etc/vault.d/vault.hcl <<EOF
 ui = true
 disable_mlock = true
