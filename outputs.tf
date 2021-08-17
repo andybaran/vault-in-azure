@@ -12,5 +12,5 @@ output "azurerm_rg_location" {
 
 output "azurerm_subnet" {
   value = azurerm_subnet.vault-subnet.id
-  senssitive = false 
+  sensitive = false 
 }
