@@ -45,7 +45,8 @@ data "template_file" "tfe-agent-setup" {
   template = file("${path.module}/tfe-agent-setup.tpl")
 
   vars = {
-
+    tfc_agent_token = var.tfc_agent_token
+    tfc_agent_name = var.tfc_agent_name
   }
 }
 
@@ -102,7 +103,7 @@ resource "azurerm_linux_virtual_machine" "postgres_vm" {
 }
 
 resource "azurerm_linux_virtual_machine" "tfe_agent_vm" {
-  name                = var.tfe_agent_vm_name
+  name                = var.tfc_agent_name
   resource_group_name = azurerm_resource_group.vault-rg.name
   location            = azurerm_resource_group.vault-rg.location
   size                = "Standard_D4a_v4" #https://docs.microsoft.com/en-us/azure/virtual-machines/sizes
