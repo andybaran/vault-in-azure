@@ -8,16 +8,6 @@ terraform {
   }
 }
 
-/*
-# Random provider to guarantee some uniqueness
-provider "random" {}
-
-resource "random_string" "random-string" {
-  length = 3
-  special = false
-}
-*/
-
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
   features {}
@@ -49,6 +39,14 @@ data "template_file" "vault-setup" {
 
 data "template_file" "postgres-setup" {
   template = file("${path.module}/postgressetup.tpl")
+}
+
+data "template_file" "tfe-agent-setup" {
+  template = file("${path.module}/tfe-agent-setup.tpl")
+
+  vars = {
+
+  }
 }
 
 resource "azurerm_linux_virtual_machine" "vault-vm" {
@@ -88,6 +86,32 @@ resource "azurerm_linux_virtual_machine" "postgres_vm" {
   admin_password = var.admin_password
   network_interface_ids = [
     azurerm_network_interface.postgres-nic.id,
+  ]
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
+  }
+}
+
+resource "azurerm_linux_virtual_machine" "tfe_agent_vm" {
+  name                = var.tfe_agent_vm_name
+  resource_group_name = azurerm_resource_group.vault-rg.name
+  location            = azurerm_resource_group.vault-rg.location
+  size                = "Standard_D4a_v4" #https://docs.microsoft.com/en-us/azure/virtual-machines/sizes
+  custom_data         = base64encode(data.template_file.tfe_agent_setup.rendered)
+  disable_password_authentication = false
+  admin_username      = var.admin_username
+  admin_password = var.admin_password
+  network_interface_ids = [
+    azurerm_network_interface.tfe-agent-nic.id,
   ]
 
   os_disk {

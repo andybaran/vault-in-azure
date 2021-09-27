@@ -54,6 +54,7 @@ resource "azurerm_network_interface" "postgres-nic" {
     primary                       = true
   }
 }
+
 resource "azurerm_network_interface" "windows-nic" {
   name                = "${var.rg_name}-windows-nic"
   location            = azurerm_resource_group.vault-rg.location
@@ -65,6 +66,21 @@ resource "azurerm_network_interface" "windows-nic" {
     private_ip_address_version    = "IPv4"
     private_ip_address_allocation = "Static"
     private_ip_address            = "10.20.1.111"
+    primary                       = true
+  }
+}
+
+resource "azurerm_network_interface" "tfe-agent-nic" {
+  name                = "${var.rg_name}-tfe-agent-nic"
+  location            = azurerm_resource_group.vault-rg.location
+  resource_group_name = azurerm_resource_group.vault-rg.name
+
+  ip_configuration {
+    name                          = "${var.rg_name}-tfe-agent-nic-internal"
+    subnet_id                     = azurerm_subnet.vault-subnet.id
+    private_ip_address_version    = "IPv4"
+    private_ip_address_allocation = "Static"
+    private_ip_address            = "10.20.1.112"
     primary                       = true
   }
 }

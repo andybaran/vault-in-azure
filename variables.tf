@@ -52,3 +52,15 @@ variable "windows_vm_name" {
 variable "admin_password" {
   type = string
 }
+
+variable "tfe_agent_vm_name" {
+  type = string 
+}
+
+variable "tfc_agent_token" {
+  type = string
+}
+
+variable "tfc_agent_name" {
+  type = string
+}
