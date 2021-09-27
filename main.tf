@@ -107,7 +107,7 @@ resource "azurerm_linux_virtual_machine" "tfe_agent_vm" {
   resource_group_name = azurerm_resource_group.vault-rg.name
   location            = azurerm_resource_group.vault-rg.location
   size                = "Standard_D4a_v4" #https://docs.microsoft.com/en-us/azure/virtual-machines/sizes
-  custom_data         = base64encode(data.template_file.tfe_agent_setup.rendered)
+  custom_data         = base64encode(data.template_file.tfe-agent-setup.rendered)
   disable_password_authentication = false
   admin_username      = var.admin_username
   admin_password = var.admin_password
