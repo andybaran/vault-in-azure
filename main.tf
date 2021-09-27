@@ -22,7 +22,7 @@ data "azurerm_client_config" "current" {}
 
 #  Virtual Machines
 data "template_file" "vault-setup" {
-  template = file("${path.module}/vaultsetup.tpl")
+  template = file("${path.module}/vault-setup.tpl")
 
   vars = {
     resource_group_name = var.rg_name
@@ -38,7 +38,7 @@ data "template_file" "vault-setup" {
 }
 
 data "template_file" "postgres-setup" {
-  template = file("${path.module}/postgressetup.tpl")
+  template = file("${path.module}/postgres-setup.tpl")
 }
 
 data "template_file" "tfe-agent-setup" {
