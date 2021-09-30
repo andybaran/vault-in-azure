@@ -21,7 +21,7 @@ resource "azurerm_subnet" "AzureBastionSubnet" {
   virtual_network_name = azurerm_virtual_network.vault-net.name
   address_prefixes     = ["10.20.2.0/24"]
   service_endpoints    = ["Microsoft.KeyVault"]
-
+}
 
 resource "azurerm_network_interface" "vault-nic" {
   name                = "${var.rg_name}-vault-nic"
