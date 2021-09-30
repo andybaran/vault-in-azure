@@ -13,7 +13,6 @@ locals {
 // this provisions a single node configuration with no redundancy.
 resource "azurerm_virtual_machine_extension" "create-active-directory-forest" {
   name                 = "create-active-directory-forest"
-  location             = "${azurerm_windows_virtual_machine.windows-vm.location}"
   virtual_machine_id = azurerm_windows_virtual_machine.windows-vm.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
