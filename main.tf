@@ -140,7 +140,7 @@ resource "azurerm_linux_virtual_machine" "tfe_agent_vm" {
 
 locals {
   virtual_machine_name = "${var.windows_vm_name}-dc"
-  virtual_machine_fqdn = "${local.windows_vm_name}.${var.active_directory_domain}"
+  virtual_machine_fqdn = "${local.virtual_machine_name}.${var.active_directory_domain}"
   custom_data_params   = "Param($RemoteHostName = \"${local.virtual_machine_fqdn}\", $ComputerName = \"${local.virtual_machine_name}\")"
   custom_data_content  = "${local.custom_data_params} ${file("${path.module}/files/winrm.ps1")}"
 }

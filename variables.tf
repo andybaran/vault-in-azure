@@ -77,3 +77,8 @@ variable "active_directory_domain" {
   type = string 
   default = "mydomain.local"
 }
+
+variable "active_directory_netbios_name" {
+  type = string
+  default = "mydomain"
+}
