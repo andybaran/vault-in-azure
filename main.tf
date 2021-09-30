@@ -153,7 +153,8 @@ resource "azurerm_windows_virtual_machine" "windows-vm" {
   admin_username = var.admin_username
   admin_password = var.admin_password
   network_interface_ids = [ azurerm_network_interface.windows-nic.id ]
-  custom_data    = base64(local.custom_data_content)
+  custom_data    = base64encode(local.custom_data_content)
+  
 
   os_disk {
     caching              = "ReadWrite"
