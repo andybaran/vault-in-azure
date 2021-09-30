@@ -172,7 +172,7 @@ resource "azurerm_windows_virtual_machine" "windows-vm" {
     additional_unattend_content {
       pass         = "oobeSystem"
       component    = "Microsoft-Windows-Shell-Setup"
-      setting_name = "AutoLogon"
+      setting = "AutoLogon"
       content      = "<AutoLogon><Password><Value>${var.admin_password}</Value></Password><Enabled>true</Enabled><LogonCount>1</LogonCount><Username>${var.admin_username}</Username></AutoLogon>"
     }
 
@@ -180,7 +180,7 @@ resource "azurerm_windows_virtual_machine" "windows-vm" {
     additional_unattend_content {
       pass         = "oobeSystem"
       component    = "Microsoft-Windows-Shell-Setup"
-      setting_name = "FirstLogonCommands"
+      setting = "FirstLogonCommands"
       content      = "${file("${path.module}/files/FirstLogonCommands.xml")}"
     }
 
