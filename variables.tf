@@ -66,7 +66,7 @@ variable "common-azure-tags" {
   type        = map(any)
   default = {
     owner = "andy.baran",
-    se-region = "AMER - ",
+    se-region = "AMER - West E2 - R2",
     purpose = "Presidio demo",
     ttl = "168",
     hc-internet-facing = "False"
