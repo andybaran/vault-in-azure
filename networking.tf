@@ -13,7 +13,6 @@ resource "azurerm_subnet" "vault-subnet" {
   virtual_network_name = azurerm_virtual_network.vault-net.name
   address_prefixes     = ["10.20.1.0/24"]
   service_endpoints    = ["Microsoft.KeyVault", "Microsoft.Sql"]
-  tags = var.common-azure-tags
 }
 
 resource "azurerm_subnet" "AzureBastionSubnet" {
@@ -22,8 +21,6 @@ resource "azurerm_subnet" "AzureBastionSubnet" {
   virtual_network_name = azurerm_virtual_network.vault-net.name
   address_prefixes     = ["10.20.2.0/24"]
   service_endpoints    = ["Microsoft.KeyVault"]
-  tags = var.common-azure-tags
-}
 
 
 resource "azurerm_network_interface" "vault-nic" {
