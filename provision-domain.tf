@@ -14,11 +14,12 @@ locals {
 resource "azurerm_virtual_machine_extension" "create-active-directory-forest" {
   name                 = "create-active-directory-forest"
   location             = "${azurerm_windows_virtual_machine.windows-vm.location}"
-  resource_group_name  = "${var.resource_group_name}"
-  virtual_machine_name = "${azurerm_windows_virtual_machine.windows-vm.name}"
+  virtual_machine_id = azurerm_windows_virtual_machine.windows-vm.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
   type_handler_version = "1.9"
+
+  tags = var.common-azure-tags
 
   settings = <<SETTINGS
     {
