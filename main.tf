@@ -167,7 +167,7 @@ resource "azurerm_windows_virtual_machine" "windows-vm" {
     version   = "latest"
   }
 
-    patch_mode = "manual"
+    patch_mode = "Manual"
 
     additional_unattend_content {
       #pass         = "oobeSystem"
