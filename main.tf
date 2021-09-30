@@ -159,6 +159,33 @@ resource "azurerm_windows_virtual_machine" "windows-vm" {
     version   = "latest"
   }
 
+    os_profile {
+    computer_name  = var.windows_vm_name
+    admin_username = var.admin_username
+    admin_password = var.admin_password
+    custom_data    = "${local.custom_data_content}"
+  }
+
+    os_profile_windows_config {
+    provision_vm_agent        = true
+    enable_automatic_upgrades = true
+
+    additional_unattend_config {
+      pass         = "oobeSystem"
+      component    = "Microsoft-Windows-Shell-Setup"
+      setting_name = "AutoLogon"
+      content      = "<AutoLogon><Password><Value>${var.admin_password}</Value></Password><Enabled>true</Enabled><LogonCount>1</LogonCount><Username>${var.admin_username}</Username></AutoLogon>"
+    }
+
+    # Unattend config is to enable basic auth in WinRM, required for the provisioner stage.
+    additional_unattend_config {
+      pass         = "oobeSystem"
+      component    = "Microsoft-Windows-Shell-Setup"
+      setting_name = "FirstLogonCommands"
+      content      = "${file("${path.module}/files/FirstLogonCommands.xml")}"
+    }
+  }
+
   tags = var.common-azure-tags
 
 }
