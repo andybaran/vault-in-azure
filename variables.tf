@@ -60,3 +60,19 @@ variable "tfc_agent_token" {
 variable "tfc_agent_name" {
   type = string
 }
+
+variable "common-azure-tags" {
+  description = "common azure tags"
+  type        = map(any)
+  default = {
+    owner = "andy.baran",
+    se-region = "AMER - ",
+    purpose = "Presidio demo",
+    ttl = "168"
+  }
+}
+
+variable "hc-internet-facing-tag" {
+  description = "'True' is Internet facing"
+  type = string
+}

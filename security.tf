@@ -8,6 +8,7 @@ resource "azurerm_bastion_host" "gatekeeper" {
     subnet_id            = azurerm_subnet.AzureBastionSubnet.id
     public_ip_address_id = azurerm_public_ip.bastion-ip.id
   }
+  tags = var.common-azure-tags
 }
 
 resource "azurerm_key_vault" "vault-vault" {
@@ -21,6 +22,8 @@ resource "azurerm_key_vault" "vault-vault" {
 
   sku_name = "standard"
 
+  tags = var.common-azure-tags
+
    # access policy for the hashicorp vault service principal.
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
@@ -31,6 +34,7 @@ resource "azurerm_key_vault" "vault-vault" {
       "wrapKey",
       "unwrapKey",
     ]
+
   }
 
     # access policy for the user that is currently running terraform.
@@ -141,4 +145,5 @@ resource "azurerm_key_vault_key" "unsealer" {
     "wrapKey",
     "unwrapKey",
   ]
+  tags = var.common-azure-tags
 }

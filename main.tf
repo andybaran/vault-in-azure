@@ -16,6 +16,7 @@ provider "azurerm" {
 resource "azurerm_resource_group" "vault-rg" {
   name     = var.rg_name 
   location = "East US"   # https://azure.microsoft.com/en-us/global-infrastructure/geographies/#geographies
+  tags = var.common-azure-tags
 }
 
 data "azurerm_client_config" "current" {}
@@ -74,6 +75,9 @@ resource "azurerm_linux_virtual_machine" "vault-vm" {
     sku       = "18.04-LTS"
     version   = "latest"
   }
+
+  tags = var.common-azure-tags
+
 }
 
 resource "azurerm_linux_virtual_machine" "postgres_vm" {
@@ -100,6 +104,9 @@ resource "azurerm_linux_virtual_machine" "postgres_vm" {
     sku       = "18.04-LTS"
     version   = "latest"
   }
+
+  tags = var.common-azure-tags
+
 }
 
 resource "azurerm_linux_virtual_machine" "tfe_agent_vm" {
@@ -126,6 +133,9 @@ resource "azurerm_linux_virtual_machine" "tfe_agent_vm" {
     sku       = "18.04-LTS"
     version   = "latest"
   }
+
+  tags = var.common-azure-tags
+
 }
 
 resource "azurerm_windows_virtual_machine" "windows-vm" {
@@ -148,4 +158,7 @@ resource "azurerm_windows_virtual_machine" "windows-vm" {
     sku       = "2019-Datacenter"
     version   = "latest"
   }
+
+  tags = var.common-azure-tags
+
 }

@@ -5,9 +5,7 @@ resource "azurerm_virtual_network" "vault-net" {
   location            = azurerm_resource_group.vault-rg.location
   resource_group_name = azurerm_resource_group.vault-rg.name
   address_space       = ["10.20.0.0/16"]
-  tags = {
-    environment = "Production"
-  }
+  tags = var.common-azure-tags
 }
 resource "azurerm_subnet" "vault-subnet" {
   name                 = "${var.rg_name}-vault-subnet"
@@ -15,6 +13,7 @@ resource "azurerm_subnet" "vault-subnet" {
   virtual_network_name = azurerm_virtual_network.vault-net.name
   address_prefixes     = ["10.20.1.0/24"]
   service_endpoints    = ["Microsoft.KeyVault", "Microsoft.Sql"]
+  tags = var.common-azure-tags
 }
 
 resource "azurerm_subnet" "AzureBastionSubnet" {
@@ -23,6 +22,7 @@ resource "azurerm_subnet" "AzureBastionSubnet" {
   virtual_network_name = azurerm_virtual_network.vault-net.name
   address_prefixes     = ["10.20.2.0/24"]
   service_endpoints    = ["Microsoft.KeyVault"]
+  tags = var.common-azure-tags
 }
 
 
@@ -39,6 +39,7 @@ resource "azurerm_network_interface" "vault-nic" {
     private_ip_address            = "10.20.1.100"
     primary                       = true
   }
+  tags = var.common-azure-tags
 }
 resource "azurerm_network_interface" "postgres-nic" {
   name                = "${var.rg_name}-postgres-nic"
@@ -53,6 +54,7 @@ resource "azurerm_network_interface" "postgres-nic" {
     private_ip_address            = "10.20.1.110"
     primary                       = true
   }
+  tags = var.common-azure-tags
 }
 
 resource "azurerm_network_interface" "windows-nic" {
@@ -68,6 +70,7 @@ resource "azurerm_network_interface" "windows-nic" {
     private_ip_address            = "10.20.1.111"
     primary                       = true
   }
+  tags = var.common-azure-tags
 }
 
 resource "azurerm_network_interface" "tfe-agent-nic" {
@@ -83,6 +86,7 @@ resource "azurerm_network_interface" "tfe-agent-nic" {
     private_ip_address            = "10.20.1.112"
     primary                       = true
   }
+  tags = var.common-azure-tags
 }
 resource "azurerm_public_ip" "bastion-ip" {
   name                = "${var.rg_name}-bastion-ip"
@@ -90,6 +94,7 @@ resource "azurerm_public_ip" "bastion-ip" {
   resource_group_name = azurerm_resource_group.vault-rg.name
   allocation_method   = "Static"
   sku                 = "Standard"
+  tags = var.common-azure-tags
 }
 
 resource "azurerm_network_security_group" "vault-nsg" {
@@ -132,9 +137,11 @@ resource "azurerm_network_security_group" "vault-nsg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+  tags = var.common-azure-tags
 }
 
 resource "azurerm_network_interface_security_group_association" "vault-nic-sg-association" {
   network_interface_id      = azurerm_network_interface.vault-nic.id
   network_security_group_id = azurerm_network_security_group.vault-nsg.id
+  tags = var.common-azure-tags
 }
