@@ -68,11 +68,7 @@ variable "common-azure-tags" {
     owner = "andy.baran",
     se-region = "AMER - ",
     purpose = "Presidio demo",
-    ttl = "168"
+    ttl = "168",
+    hc-internet-facing = "False"
   }
-}
-
-variable "hc-internet-facing-tag" {
-  description = "'True' is Internet facing"
-  type = string
 }
