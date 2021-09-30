@@ -72,3 +72,8 @@ variable "common-azure-tags" {
     hc-internet-facing = "False"
   }
 }
+
+variable "active_directory_domain" {
+  type = string 
+  default = "mydomain.local"
+}

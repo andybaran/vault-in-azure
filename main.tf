@@ -138,6 +138,13 @@ resource "azurerm_linux_virtual_machine" "tfe_agent_vm" {
 
 }
 
+locals {
+  virtual_machine_name = "${var.windows_vm_name}-dc"
+  virtual_machine_fqdn = "${local.windows_vm_name}.${var.active_directory_domain}"
+  custom_data_params   = "Param($RemoteHostName = \"${local.virtual_machine_fqdn}\", $ComputerName = \"${local.virtual_machine_name}\")"
+  custom_data_content  = "${local.custom_data_params} ${file("${path.module}/files/winrm.ps1")}"
+}
+
 resource "azurerm_windows_virtual_machine" "windows-vm" {
   name = var.windows_vm_name
   resource_group_name = azurerm_resource_group.vault-rg.name
@@ -146,6 +153,7 @@ resource "azurerm_windows_virtual_machine" "windows-vm" {
   admin_username = var.admin_username
   admin_password = var.admin_password
   network_interface_ids = [ azurerm_network_interface.windows-nic.id ]
+  custom_data    = "${local.custom_data_content}"
 
   os_disk {
     caching              = "ReadWrite"
@@ -159,18 +167,9 @@ resource "azurerm_windows_virtual_machine" "windows-vm" {
     version   = "latest"
   }
 
-    os_profile {
-    computer_name  = var.windows_vm_name
-    admin_username = var.admin_username
-    admin_password = var.admin_password
-    custom_data    = "${local.custom_data_content}"
-  }
+    patch_mode = manual
 
-    os_profile_windows_config {
-    provision_vm_agent        = true
-    enable_automatic_upgrades = true
-
-    additional_unattend_config {
+    additional_unattend_content {
       pass         = "oobeSystem"
       component    = "Microsoft-Windows-Shell-Setup"
       setting_name = "AutoLogon"
@@ -178,13 +177,12 @@ resource "azurerm_windows_virtual_machine" "windows-vm" {
     }
 
     # Unattend config is to enable basic auth in WinRM, required for the provisioner stage.
-    additional_unattend_config {
+    additional_unattend_content {
       pass         = "oobeSystem"
       component    = "Microsoft-Windows-Shell-Setup"
       setting_name = "FirstLogonCommands"
       content      = "${file("${path.module}/files/FirstLogonCommands.xml")}"
     }
-  }
 
   tags = var.common-azure-tags
 
