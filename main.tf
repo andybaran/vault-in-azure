@@ -154,7 +154,7 @@ resource "azurerm_windows_virtual_machine" "windows-vm" {
   admin_password = var.admin_password
   network_interface_ids = [ azurerm_network_interface.windows-nic.id ]
   custom_data    = base64encode(local.custom_data_content)
-  
+
 
   os_disk {
     caching              = "ReadWrite"
@@ -168,7 +168,7 @@ resource "azurerm_windows_virtual_machine" "windows-vm" {
     version   = "latest"
   }
 
-    patch_mode = "Manual"
+    #patch_mode = "Manual"
 
     additional_unattend_content {
       #pass         = "oobeSystem"
