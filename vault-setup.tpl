@@ -29,8 +29,8 @@ storage "file" {
 }
 
 listener "tcp" {
-  address         = "0.0.0.0:8200"
-  cluster_address = "0.0.0.0:8201"
+  address         = "$ip_address:8200"
+  cluster_address = "$ip_address:8201"
   tls_disable     = 1
   telemetry {
     unauthenticated_metrics_access = true
@@ -59,7 +59,7 @@ systemctl enable vault
 systemctl restart vault
 
 cat >/etc/profile.d/vault.sh <<'EOF'
-export VAULT_ADDR=http://127.0.0.1:8200
+export VAULT_ADDR=http://$ip_address:8200
 export VAULT_SKIP_VERIFY=true
 EOF
 
