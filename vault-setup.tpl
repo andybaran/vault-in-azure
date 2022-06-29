@@ -21,16 +21,16 @@ cat > /etc/vault.d/vault.hcl <<EOF
 ui = true
 disable_mlock = true
 
-api_addr = "http://$ip_address:8200"
-cluster_addr = "http://$ip_address:8201"
+api_addr = "http://{$ip_address}:8200"
+cluster_addr = "http://{$ip_address}:8201"
 
 storage "file" {
   path = "/opt/vault/data"
 }
 
 listener "tcp" {
-  address         = "$ip_address:8200"
-  cluster_address = "$ip_address:8201"
+  address         = "0.0.0.0:8200"
+  cluster_address = "0.0.0.0:8201"
   tls_disable     = 1
   telemetry {
     unauthenticated_metrics_access = true
@@ -59,7 +59,7 @@ systemctl enable vault
 systemctl restart vault
 
 cat >/etc/profile.d/vault.sh <<'EOF'
-export VAULT_ADDR=http://$ip_address:8200
+export VAULT_ADDR=http://{$ip_address}:8200
 export VAULT_SKIP_VERIFY=true
 EOF
 
