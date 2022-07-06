@@ -31,8 +31,8 @@ resource "azurerm_key_vault" "vault-vault" {
 
     key_permissions = [
       "get",
-      "wrapKey",
-      "unwrapKey",
+      "WrapKey",
+      "UnwrapKey",
     ]
 
   }
@@ -43,11 +43,11 @@ resource "azurerm_key_vault" "vault-vault" {
     object_id = data.azurerm_client_config.current.object_id
 
     key_permissions = [
-        "backup", 
-        "create", 
-        "decrypt", 
-        "delete", 
-        "encrypt", 
+        "Backup", 
+        "Create", 
+        "Decrypt", 
+        "Delete", 
+        "Encrypt", 
         "get", 
         "import", 
         "list", 
@@ -55,16 +55,16 @@ resource "azurerm_key_vault" "vault-vault" {
         "recover", 
         "restore", 
         "sign", 
-        "unwrapKey", 
-        "update", 
+        "UnwrapKey", 
+        "Update", 
         "verify", 
-        "wrapKey",
+        "WrapKey",
     ]
 
     certificate_permissions = [
-        "backup",
-        "create",
-        "delete",
+        "Backup",
+        "Create",
+        "Delete",
         "deleteIssuers",
         "get",
         "getIssuers",
@@ -77,23 +77,23 @@ resource "azurerm_key_vault" "vault-vault" {
         "recover",
         "restore",
         "setIssuers",
-        "update",
+        "Update",
     ]
 
     secret_permissions = [
-        "backup",
-        "delete",
+        "Backup",
+        "Delete",
         "get",
         "list",
         "purge",
         "recover",
         "restore",
-        "set",
+        "Set",
     ]
 
     storage_permissions = [
-        "backup",
-        "delete",
+        "Backup",
+        "Delete",
         "deletesas",
         "get",
         "getsas",
@@ -103,9 +103,9 @@ resource "azurerm_key_vault" "vault-vault" {
         "recover",
         "regeneratekey",
         "restore",
-        "set",
+        "Set",
         "setsas",
-        "update",
+        "Update",
     ]
 
 
@@ -142,8 +142,8 @@ resource "azurerm_key_vault_key" "unsealer" {
   key_size     = 2048
 
   key_opts = [
-    "wrapKey",
-    "unwrapKey",
+    "WrapKey",
+    "UnwrapKey",
   ]
   tags = var.common-azure-tags
 }
