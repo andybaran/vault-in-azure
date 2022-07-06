@@ -16,7 +16,7 @@ apt-get install -y postgresql-client jq unzip
 
 curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
 apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-apt-get install -y "vault=${vault_version}"
+apt-get install -y "vaul-enterprise=${vault_version}"
 cat > /etc/vault.d/vault.hcl <<EOF
 ui = true
 disable_mlock = true
@@ -29,8 +29,8 @@ storage "file" {
 }
 
 listener "tcp" {
-  address         = "0.0.0.0:8200"
-  cluster_address = "0.0.0.0:8201"
+  address         = "{$ip_address}:8200"
+  cluster_address = "{$ip_address}:8201"
   tls_disable     = 1
   telemetry {
     unauthenticated_metrics_access = true
@@ -92,7 +92,7 @@ vault write auth/azure/role/dev-role \
 # see https://docs.microsoft.com/en-us/azure/virtual-machines/linux/instance-metadata-service
 vault write auth/azure/login \
   role="dev-role" \
-  jwt="$(curl 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fmanagement.azure.com%2F' -H Metadata:true -s | jq -r .access_token)" \
+  jwt="$(curl 'http://{$ip_address}/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fmanagement.azure.com%2F' -H Metadata:true -s | jq -r .access_token)" \
   subscription_id="${subscription_id}" \
   resource_group_name="${resource_group_name}" \
   vm_name="${vm_name}"
