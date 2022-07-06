@@ -142,8 +142,8 @@ resource "azurerm_key_vault_key" "unsealer" {
   key_size     = 2048
 
   key_opts = [
-    "WrapKey",
-    "UnwrapKey",
+    "wrapKey",
+    "unwrapKey",
   ]
   tags = var.common-azure-tags
 }
