@@ -30,16 +30,16 @@ disable_mlock = true
 
 license_path = "/etc/vault.d/license.hclic"
 
-api_addr = "http://${ip_address}:8200"
-cluster_addr = "http://${ip_address}:8201"
+api_addr = "http://$ip_address:8200"
+cluster_addr = "http://$ip_address:8201"
 
 storage "file" {
   path = "/opt/vault/data"
 }
 
 listener "tcp" {
-  address         = "${ip_address}:8200"
-  cluster_address = "${ip_address}:8201"
+  address         = "$ip_address:8200"
+  cluster_address = "$ip_address:8201"
   tls_disable     = 1
   telemetry {
     unauthenticated_metrics_access = true
@@ -74,7 +74,7 @@ systemctl enable vault
 systemctl restart vault
 
 cat >/etc/profile.d/vault.sh <<'EOF'
-export VAULT_ADDR=http://${ip_address}:8200
+export VAULT_ADDR=http://$ip_address:8200
 export VAULT_SKIP_VERIFY=true
 EOF
 
@@ -110,7 +110,7 @@ vault write auth/azure/role/dev-role \
 # see https://docs.microsoft.com/en-us/azure/virtual-machines/linux/instance-metadata-service
 vault write auth/azure/login \
   role="dev-role" \
-  jwt="$(curl 'http://${ip_address}/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fmanagement.azure.com%2F' -H Metadata:true -s | jq -r .access_token)" \
+  jwt="$(curl 'http://$ip_address/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fmanagement.azure.com%2F' -H Metadata:true -s | jq -r .access_token)" \
   subscription_id="${subscription_id}" \
   resource_group_name="${resource_group_name}" \
   vm_name="${vm_name}"
