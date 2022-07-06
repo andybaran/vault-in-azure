@@ -21,6 +21,8 @@ cat > /etc/vault.d/vault.hcl <<EOF
 ui = true
 disable_mlock = true
 
+license_path = "/etc/vault.d/license.hclic"
+
 api_addr = "http://{$ip_address}:8200"
 cluster_addr = "http://{$ip_address}:8201"
 
@@ -55,6 +57,10 @@ seal "azurekeyvault" {
   key_name       = "${key_name}"
 }
 EOF
+
+# write vault license
+echo "${vault_license}" >> /etc/vault.d/license.hclic
+
 systemctl enable vault
 systemctl restart vault
 

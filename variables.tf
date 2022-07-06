@@ -14,6 +14,10 @@ variable "vault_version" {
   type = string
 }
 
+variable "vault_license" {
+  type = string
+}
+
 variable "postgres_vm_name" {
   type = string
 }
@@ -67,7 +71,7 @@ variable "common-azure-tags" {
   default = {
     owner = "andy.baran",
     se-region = "AMER - West E2 - R2",
-    purpose = "Presidio demo",
+    purpose = "Vault Enterprise Demo",
     ttl = "168",
     hc-internet-facing = "False"
   }
