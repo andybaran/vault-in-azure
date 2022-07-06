@@ -8,15 +8,22 @@
 set -euxo pipefail
 
 ip_address="$(ip addr show eth0 | perl -n -e'/ inet (\d+(\.\d+)+)/ && print $1')"
-apt update
-apt-get install -y postgresql-client jq unzip
+apt update -y
+apt-get install -y postgresql-client jq unzip gpg
 
-# install vault.
-# NB execute `apt-cache madison vault` to known the available versions.
+# Run `apt-cache madison vault` to see the available versions.
 
-curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
-apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-apt-get install -y "vaul-enterprise=${vault_version}"
+wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg >/dev/null
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+apt update -y
+apt upgrade -y
+apt auto-remove -y
+apt-get install -y "vault-enterprise=${vault_version}"
+
+### 
+# Create Vault Server config file
+###
+
 cat > /etc/vault.d/vault.hcl <<EOF
 ui = true
 disable_mlock = true
@@ -58,7 +65,9 @@ seal "azurekeyvault" {
 }
 EOF
 
-# write vault license
+###
+# Write vault license
+###
 echo "${vault_license}" >> /etc/vault.d/license.hclic
 
 systemctl enable vault
@@ -69,7 +78,10 @@ export VAULT_ADDR=http://{$ip_address}:8200
 export VAULT_SKIP_VERIFY=true
 EOF
 
-# TODO why isn't this in $HOME?
+###
+# Create script to configure azure auth
+# Will be stored in /tmp/azure_auth.sh
+###
 cat >/tmp/azure_auth.sh <<'EOF'
 #!/bin/bash
 set -euxo pipefail
