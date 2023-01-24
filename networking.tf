@@ -38,6 +38,23 @@ resource "azurerm_network_interface" "vault-nic" {
   }
   tags = var.common-azure-tags
 }
+
+resource "azurerm_network_interface" "vault-packer-nic" {
+  name                = "${var.rg_name}-vault-packer-nic"
+  location            = azurerm_resource_group.vault-rg.location
+  resource_group_name = azurerm_resource_group.vault-rg.name
+
+  ip_configuration {
+    name                          = "${var.rg_name}-vault-nic-internal"
+    subnet_id                     = azurerm_subnet.vault-subnet.id
+    private_ip_address_version    = "IPv4"
+    private_ip_address_allocation = "Static"
+    private_ip_address            = "10.20.1.120"
+    primary                       = true
+  }
+  tags = var.common-azure-tags
+}
+
 resource "azurerm_network_interface" "postgres-nic" {
   name                = "${var.rg_name}-postgres-nic"
   location            = azurerm_resource_group.vault-rg.location
