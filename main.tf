@@ -17,7 +17,7 @@ resource "azurerm_resource_group" "vault-rg" {
   tags = var.common-azure-tags
 }
 
-data "azurerm_client_config" "current" {}
+#data "azurerm_client_config" "current" {}
 
 #  Virtual Machines
 data "template_file" "vault-setup" {
