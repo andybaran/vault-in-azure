@@ -28,12 +28,6 @@ data "template_file" "vault-setup" {
     vm_name             = var.vault_vm_name
     vault_license       = var.vault_license
     vault_version       = var.vault_version
-    tenant_id           = var.ARM_TENANT_ID
-    subscription_id     = var.ARM_SUBSCRIPTION_ID
-    client_id           = var.ARM_CLIENT_ID
-    client_secret       = var.ARM_CLIENT_SECRET
-    vault_name          = azurerm_key_vault.vault-vault.name
-    key_name            = azurerm_key_vault_key.unsealer.name
   }
 }
 

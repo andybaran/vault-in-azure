@@ -55,14 +55,6 @@ telemetry {
    prometheus_retention_time = "24h"
 }
 
-# enable auto-unseal using the azure key vault.
-seal "azurekeyvault" {
-  client_id      = "${client_id}"
-  client_secret  = "${client_secret}"
-  tenant_id      = "${tenant_id}"
-  vault_name     = "${vault_name}"
-  key_name       = "${key_name}"
-}
 EOF
 
 ###
