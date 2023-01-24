@@ -2,8 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      #version = "~> 2.46.0"
-      version = "~>3.12.0"
+      version = "~>3.40.0"
     }
   }
 }
@@ -11,7 +10,6 @@ terraform {
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
   features {}
-  subscription_id = var.azure_subscription_id
 }
 resource "azurerm_resource_group" "vault-rg" {
   name     = var.rg_name 
