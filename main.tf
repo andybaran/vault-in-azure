@@ -208,3 +208,44 @@ resource "azurerm_windows_virtual_machine" "windows-vm" {
   tags = var.common-azure-tags
 
 }
+
+# Log Analytics
+# https://learn.microsoft.com/en-us/azure/azure-monitor/agents/data-sources-syslog
+# https://learn.microsoft.com/en-us/azure/azure-monitor/vm/monitor-virtual-machine
+
+resource "azurerm_monitor_data_collection_rule" "vault-dcr" {
+  name                = "example-rule"
+  resource_group_name = azurerm_resource_group.vault-rg.name
+  location            = azurerm_resource_group.vault-rg.location
+
+  destinations {
+    log_analytics {
+      workspace_resource_id = azurerm_log_analytics_workspace.log-analytics-workspace.id
+      name                  = "vault-destination-log"
+    }
+
+    azure_monitor_metrics {
+      name = "vault-destination-metrics"
+    }
+  }
+
+  data_flow {
+    streams      = ["Microsoft-Syslog"]
+    destinations = ["vault-destination-log"]
+  }
+
+  data_sources {
+    syslog {
+      facility_names = ["*"]
+      log_levels     = ["*"]
+      name           = "vault-datasource-syslog"
+    }
+  }
+  description = "syslog data collection rule"
+  tags = var.common-azure-tags
+  depends_on = [
+    azurerm_log_analytics_solution.la-opf-solution-sentinel
+  ]
+}
+
+

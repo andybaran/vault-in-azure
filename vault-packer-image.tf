@@ -43,3 +43,10 @@ resource "azurerm_linux_virtual_machine" "vault-packer-vm" {
   tags = var.common-azure-tags
 
 }
+
+resource "azurerm_monitor_data_collection_rule_association" "vault-packer-dcra" {
+  name                    = "vault-packer-dcra"
+  target_resource_id      = azurerm_linux_virtual_machine.vault-packer-vm.id
+  data_collection_rule_id = azurerm_monitor_data_collection_rule.vault-dcr.id
+  description             = "Packer Vault Image DCRA"
+}
