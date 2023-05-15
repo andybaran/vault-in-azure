@@ -1,14 +1,8 @@
-
-data "hcp_packer_iteration" "packer_iteration_vault" {
-    bucket_name = "VaultEnt"
-    channel = "dev"
-}
-
 data "hcp_packer_image" "packer_image_vault" {
-    bucket_name = "VaultEnt"
-    cloud_provider = "azure"
-    iteration_id = data.hcp_packer_iteration.packer_iteration_vault.ulid
-    region = "eastus"
+  bucket_name = "VaultEnt"
+  channel         = "latest"
+  cloud_provider  = "azure"
+  region          = "eastus"
 }
 
 resource "azurerm_linux_virtual_machine" "vault-packer-vm" {
