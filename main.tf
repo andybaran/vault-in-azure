@@ -4,9 +4,9 @@ terraform {
       source  = "hashicorp/azurerm"
      # version = "3.00.0"
     }
-    hcp = {
-      source = "hashicorp/hcp"
-    }
+    # hcp = {
+    #  source = "hashicorp/hcp"
+    # }
   }
 }
 
