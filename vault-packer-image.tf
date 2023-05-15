@@ -31,14 +31,14 @@ resource "azurerm_linux_virtual_machine" "vault-packer-vm" {
   source_image_id = data.hcp_packer_image.packer_image_vault.cloud_image_id
 
   # Use these commented out lines to try to deploy directly instead of via Packer
-  #source_image_id = "/subscriptions/14692f20-9428-451b-8298-102ed4e39c2a/resourceGroups/akb-tfc/providers/Microsoft.Compute/images/akb-vault-1216"
+  # source_image_id = "/subscriptions/14692f20-9428-451b-8298-102ed4e39c2a/resourceGroups/akb-tfc/providers/Microsoft.Compute/images/akb-vault-1216"
  
- # source_image_reference {
- #   publisher = "Canonical"
- #   offer     = "UbuntuServer"
- #   sku       = "18.04-LTS"
- #   version   = "latest"
- # }
+  # source_image_reference {
+  #   publisher = "Canonical"
+  #   offer     = "UbuntuServer"
+  #   sku       = "18.04-LTS"
+  #   version   = "latest"
+  # }
 
   tags = var.common-azure-tags
 
