@@ -62,9 +62,9 @@ resource "azurerm_log_analytics_solution" "la-opf-solution-sentinel" {
   }
 } */
 
-data "template_file" "postgres-setup" {
+/* data "template_file" "postgres-setup" {
   template = file("${path.module}/postgres-setup.tpl")
-}
+} */
 
 data "template_file" "tfe-agent-setup" {
   template = file("${path.module}/tfe-agent-setup.tpl")
@@ -104,7 +104,7 @@ data "template_file" "tfe-agent-setup" {
 
 } */
 
-resource "azurerm_linux_virtual_machine" "postgres_vm" {
+/* resource "azurerm_linux_virtual_machine" "postgres_vm" {
   name                = var.postgres_vm_name
   resource_group_name = azurerm_resource_group.vault-rg.name
   location            = azurerm_resource_group.vault-rg.location
@@ -131,7 +131,7 @@ resource "azurerm_linux_virtual_machine" "postgres_vm" {
 
   tags = var.common-azure-tags
 
-}
+} */
 
 resource "azurerm_linux_virtual_machine" "tfe_agent_vm" {
   name                = var.tfc_agent_name
@@ -169,7 +169,7 @@ locals {
   custom_data_content  = "${local.custom_data_params} ${file("${path.module}/files/winrm.ps1")}"
 }
 
-resource "azurerm_windows_virtual_machine" "windows-vm" {
+/* resource "azurerm_windows_virtual_machine" "windows-vm" {
   name = var.windows_vm_name
   resource_group_name = azurerm_resource_group.vault-rg.name
   location            = azurerm_resource_group.vault-rg.location
@@ -211,7 +211,7 @@ resource "azurerm_windows_virtual_machine" "windows-vm" {
 
   tags = var.common-azure-tags
 
-}
+} */
 
 # Log Analytics
 # https://learn.microsoft.com/en-us/azure/azure-monitor/agents/data-sources-syslog
