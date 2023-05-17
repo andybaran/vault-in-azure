@@ -10,12 +10,10 @@ terraform {
   }
 }
 
-
 # Configure the HCP Provider
 provider "hcp" {
   
 }
-
 
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
@@ -50,11 +48,10 @@ resource "azurerm_log_analytics_solution" "la-opf-solution-sentinel" {
   }
 }
 
-
 #data "azurerm_client_config" "current" {}
 
 #  Virtual Machines
-data "template_file" "vault-setup" {
+/* data "template_file" "vault-setup" {
   template = file("${path.module}/vault-setup.tpl")
 
   vars = {
@@ -63,7 +60,7 @@ data "template_file" "vault-setup" {
     vault_license       = var.vault_license
     vault_version       = var.vault_version
   }
-}
+} */
 
 data "template_file" "postgres-setup" {
   template = file("${path.module}/postgres-setup.tpl")
@@ -78,7 +75,7 @@ data "template_file" "tfe-agent-setup" {
   }
 }
 
-resource "azurerm_linux_virtual_machine" "vault-vm" {
+/* resource "azurerm_linux_virtual_machine" "vault-vm" {
   name                = var.vault_vm_name
   resource_group_name = azurerm_resource_group.vault-rg.name
   location            = azurerm_resource_group.vault-rg.location
@@ -105,7 +102,7 @@ resource "azurerm_linux_virtual_machine" "vault-vm" {
 
   tags = var.common-azure-tags
 
-}
+} */
 
 resource "azurerm_linux_virtual_machine" "postgres_vm" {
   name                = var.postgres_vm_name
