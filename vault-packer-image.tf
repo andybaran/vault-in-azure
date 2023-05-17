@@ -48,7 +48,7 @@ resource "azurerm_linux_virtual_machine" "vault-packer-vm" {
 
 }
 
-resource "azure_virtual_machine_extension" "vault-monitor-extension" {
+resource "azurerm_virtual_machine_extension" "vault-monitor-extension" {
   name = "azure-monitor-extension"
   virtual_machine_id = azurerm_linux_virtual_machine.vault-packer-vm.id
   publisher = "Microsoft.Azure.Monitor"
