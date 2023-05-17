@@ -6,7 +6,7 @@ data "hcp_packer_image" "packer_image_vault" {
 }
 
 data "cloudinit_config" "vault-cloudinit" {
-  gzip = true
+  gzip = false
   base64_encode = true
   part {
     content = templatefile("vault-packer-image-cloudinit.tpl", {vault_license = var.vault_license})
