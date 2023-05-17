@@ -31,7 +31,7 @@ resource "azurerm_linux_virtual_machine" "vault-packer-vm" {
     storage_account_type = "Standard_LRS"
   }
 
-  custom_data         = data.cloudinit_config.vault-cloudinit
+  custom_data         = data.cloudinit_config.vault-cloudinit.rendered
 
   source_image_id = data.hcp_packer_image.packer_image_vault.cloud_image_id
 
