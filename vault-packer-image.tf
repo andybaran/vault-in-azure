@@ -9,7 +9,7 @@ data "cloudinit_config" "vault-cloudinit" {
   gzip = false
   base64_encode = true
   part {
-    content = templatefile("vault-packer-image-cloudinit.tpl", {vault_license = var.vault_license})
+    content = templatefile("vault-packer-image-cloudinit.tpl", {vault_license = var.vault_license, vault_vm_name = var.vault_vm_name})
     content_type = "text/jinja2"
   }
 }
