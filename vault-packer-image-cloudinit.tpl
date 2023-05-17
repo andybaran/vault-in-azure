@@ -8,7 +8,7 @@ write_files:
     permissions: '0770'
     content: ${vault_license}
   - encoding: text/plain
-    path: /etc/vault.d/vault.hclic
+    path: /etc/vault.d/vault.hcl
     owner: vault:vault
     permissions: '0770'
     content : |
