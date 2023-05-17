@@ -48,6 +48,14 @@ resource "azurerm_linux_virtual_machine" "vault-packer-vm" {
 
 }
 
+resource "azure_virtual_machine_extension" "vault-monitor-extension" {
+  name = "azure-monitor-extension"
+  virtual_machine_id = azurerm_linux_virtual_machine.vault-packer-vm.id
+  publisher = "Microsoft.Azure.Monitor"
+  type = "AzureMonitorLinuxAgent"
+  type_handler_version = "1.25.1"
+}
+
 resource "azurerm_monitor_data_collection_rule_association" "vault-packer-dcra" {
   name                    = "vault-packer-dcra"
   target_resource_id      = azurerm_linux_virtual_machine.vault-packer-vm.id
