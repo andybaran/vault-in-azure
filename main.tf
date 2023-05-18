@@ -29,7 +29,7 @@ resource "azurerm_resource_group" "vault-rg" {
 #Azure Log Analytics/Sentinel
 
 resource "azurerm_log_analytics_workspace" "log-analytics-workspace" {
-  name                = "la-example-utv-weu"
+  name                = "linux vault workspace "
   location            = azurerm_resource_group.vault-rg.location
   resource_group_name = azurerm_resource_group.vault-rg.name
   sku                 = "PerGB2018"
@@ -162,12 +162,12 @@ resource "azurerm_linux_virtual_machine" "tfe_agent_vm" {
 
 }
 
-locals {
+/* locals {
   virtual_machine_name = "${var.windows_vm_name}-dc"
   virtual_machine_fqdn = "${local.virtual_machine_name}.${var.active_directory_domain}"
   custom_data_params   = "Param($RemoteHostName = \"${local.virtual_machine_fqdn}\", $ComputerName = \"${local.virtual_machine_name}\")"
   custom_data_content  = "${local.custom_data_params} ${file("${path.module}/files/winrm.ps1")}"
-}
+} */
 
 /* resource "azurerm_windows_virtual_machine" "windows-vm" {
   name = var.windows_vm_name
@@ -218,7 +218,7 @@ locals {
 # https://learn.microsoft.com/en-us/azure/azure-monitor/vm/monitor-virtual-machine
 
 resource "azurerm_monitor_data_collection_rule" "vault-dcr" {
-  name                = "example-rule"
+  name                = "linux-syslog"
   resource_group_name = azurerm_resource_group.vault-rg.name
   location            = azurerm_resource_group.vault-rg.location
 
@@ -243,6 +243,7 @@ resource "azurerm_monitor_data_collection_rule" "vault-dcr" {
       facility_names = ["*"]
       log_levels     = ["*"]
       name           = "vault-datasource-syslog"
+      streams = ["Microsoft-Syslog"]
     }
   }
   description = "syslog data collection rule"
