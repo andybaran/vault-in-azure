@@ -29,7 +29,7 @@ resource "azurerm_resource_group" "vault-rg" {
 #Azure Log Analytics/Sentinel
 
 resource "azurerm_log_analytics_workspace" "log-analytics-workspace" {
-  name                = "linux vault workspace "
+  name                = "linux-vault-workspace "
   location            = azurerm_resource_group.vault-rg.location
   resource_group_name = azurerm_resource_group.vault-rg.name
   sku                 = "PerGB2018"
