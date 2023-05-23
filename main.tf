@@ -240,8 +240,8 @@ resource "azurerm_monitor_data_collection_rule" "vault-dcr" {
 
   data_sources {
     syslog {
-      facility_names = ["*"]
-      log_levels     = ["*"]
+      facility_names = ["local2"]
+      log_levels     = ["Notice"]
       name           = "vault-datasource-syslog"
       streams = ["Microsoft-Syslog"]
     }
