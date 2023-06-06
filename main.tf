@@ -217,6 +217,8 @@ resource "azurerm_linux_virtual_machine" "tfe_agent_vm" {
 # https://learn.microsoft.com/en-us/azure/azure-monitor/agents/data-sources-syslog
 # https://learn.microsoft.com/en-us/azure/azure-monitor/vm/monitor-virtual-machine
 
+# logger -p local2.notice -t ${0##*/}[$$] Hello world
+
 resource "azurerm_monitor_data_collection_rule" "vault-dcr" {
   name                = "linux-syslog"
   resource_group_name = azurerm_resource_group.vault-rg.name

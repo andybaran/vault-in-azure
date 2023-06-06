@@ -46,6 +46,10 @@ resource "azurerm_linux_virtual_machine" "vault-packer-vm" {
 
   tags = var.common-azure-tags
 
+  identity {
+    type = "SystemAssigned"
+  }
+
 }
 
 resource "azurerm_virtual_machine_extension" "vault-monitor-extension" {
