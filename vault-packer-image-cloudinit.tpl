@@ -25,3 +25,5 @@ write_files:
         tls_cert_file = "/opt/vault/tls/tls.crt"
         tls_key_file = "/opt/vault/tls/tls.key"
       }
+runcmd:
+  - [vault, audit, enable, syslog, tag="vault", facility="AUTH"]
