@@ -5,6 +5,8 @@ data "hcp_packer_image" "packer_image_vault" {
   region          = "eastus"
 }
 
+
+## Use cloud-init to install the license file and a basic config
 data "cloudinit_config" "vault-cloudinit" {
   gzip = false
   base64_encode = true
@@ -35,15 +37,6 @@ resource "azurerm_linux_virtual_machine" "vault-packer-vm" {
 
   source_image_id = data.hcp_packer_image.packer_image_vault.cloud_image_id
 
-  # Use these commented out lines to try to deploy directly instead of via Packer
-  # source_image_id = "/subscriptions/14692f20-9428-451b-8298-102ed4e39c2a/resourceGroups/akb-tfc/providers/Microsoft.Compute/images/akb-vault-1216"
-  # source_image_reference {
-  #   publisher = "Canonical"
-  #   offer     = "UbuntuServer"
-  #   sku       = "18.04-LTS"
-  #   version   = "latest"
-  # }
-
   tags = var.common-azure-tags
 
   identity {
@@ -52,6 +45,8 @@ resource "azurerm_linux_virtual_machine" "vault-packer-vm" {
 
 }
 
+
+### Install the Azure Monitor Agent 
 resource "azurerm_virtual_machine_extension" "vault-monitor-extension" {
   name = "azure-monitor-extension"
   virtual_machine_id = azurerm_linux_virtual_machine.vault-packer-vm.id
@@ -60,6 +55,7 @@ resource "azurerm_virtual_machine_extension" "vault-monitor-extension" {
   type_handler_version = "1.25"
 }
 
+### Associate 
 resource "azurerm_monitor_data_collection_rule_association" "vault-packer-dcra" {
   name                    = "vault-packer-dcra"
   target_resource_id      = azurerm_linux_virtual_machine.vault-packer-vm.id
