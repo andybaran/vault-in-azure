@@ -100,6 +100,9 @@ data "template_file" "tfe-agent-setup" {
   }
 }
 
+data "template_file" "postgres-setup" {
+  template = file("${path.module}/postgres-setup.tpl")
+}
 
 resource "azurerm_linux_virtual_machine" "postgres_vm" {
   name                = var.postgres_vm_name
