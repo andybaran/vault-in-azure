@@ -1,6 +1,5 @@
-
 locals {
-  application_id = "08cbf481-a81f-4ced-91c8-a9172e6c4549"
+  application_id = "f71c9fb6-324d-4f02-a75c-43b95999bcd4"
   role_def_name  = join("-", ["hcp-hvn-peering-access", local.application_id])
   vnet_id        = "/subscriptions/a5dcde43-26f8-45d1-8b41-2fa43ec7795f/resourceGroups/akb-tfc/providers/Microsoft.Network/virtualNetworks/akb-tfc-vault-net"
 }
