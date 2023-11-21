@@ -140,7 +140,7 @@ resource "azurerm_network_security_group" "vault-nsg" {
     destination_address_prefix = "*"
   }
 
-    security_rule {
+  security_rule {
     name                       = "postgres"
     priority                   = 1003
     direction                  = "Inbound"
@@ -151,7 +151,23 @@ resource "azurerm_network_security_group" "vault-nsg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+  
+  security_rule {
+    name                       = "VaultServerOutbound"
+    priority                   = 1004
+    direction                  = "Outbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "8200"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+  
   tags = var.common-azure-tags
+
+
+
 }
 
 resource "azurerm_network_interface_security_group_association" "vault-nic-sg-association" {
