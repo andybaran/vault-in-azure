@@ -10,6 +10,11 @@ output "azurerm_rg_location" {
   sensitive = false
 }
 
+output "azurerm_vnet_id" {
+  value = azurerm_virtual_network.vault-net.id
+  sensitive = false
+}
+
 output "azurerm_subnet" {
   value = azurerm_subnet.vault-subnet.id
   sensitive = false 
